@@ -9,7 +9,6 @@
     "docker:run": "docker run --rm --name y-container -d -p 3000:3000 --env-file .env y-bot",
     "docker:stop": "docker stop y-container",
     "start": "bun run index.ts",
-    "build": "bun install --production",
     "lint": "eslint . --fix"
   },
   "peerDependencies": {
