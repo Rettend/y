@@ -1,5 +1,5 @@
 import process from 'node:process'
-import { permissions } from '../util/perm'
+import { permissions } from '../util/constants'
 import { deploy } from '../util/deploy'
 import type { Command } from './index'
 

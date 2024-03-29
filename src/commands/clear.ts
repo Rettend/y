@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, TextChannel } from 'discord.js'
-import { permissions } from '../util/perm'
+import { permissions } from '../util/constants'
 import type { Command } from './index'
 
 export default {
