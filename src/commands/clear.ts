@@ -1,10 +1,12 @@
 import { ApplicationCommandOptionType, TextChannel } from 'discord.js'
-import type { Command } from './index.js'
+import { permissions } from '../util/perm'
+import type { Command } from './index'
 
 export default {
   data: {
     name: 'clear',
     description: 'Clears a specified amount of messages from the channel.',
+    default_member_permissions: permissions.ADMINISTRATOR,
     options: [
       {
         name: 'amount',
