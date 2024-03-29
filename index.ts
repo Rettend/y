@@ -15,4 +15,4 @@ const commands = await loadCommands(r('commands/'))
 
 registerEvents(commands, events, client)
 
-client.login(process.env.TOKEN)
+client.login(process.env.DISCORD_TOKEN)
