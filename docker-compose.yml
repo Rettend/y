@@ -5,7 +5,7 @@ services:
     image: y-bot
     container_name: y-container
     environment:
-      - PUBLIC_KEY
-      - TOKEN
+      - APPLICATION_ID
+      - DISCORD_TOKEN
     ports:
       - "3000:3000"
