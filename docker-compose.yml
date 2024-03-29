@@ -1,0 +1,11 @@
+version: '3'
+services:
+  y-bot:
+    build: .
+    image: y-bot
+    container_name: y-container
+    environment:
+      - PUBLIC_KEY
+      - TOKEN
+    ports:
+      - "3000:3000"
