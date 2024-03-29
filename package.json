@@ -3,8 +3,10 @@
   "type": "module",
   "module": "index.ts",
   "scripts": {
-    "dev": "bun src/index.ts",
-    "build": "bun build --compile --minify --sourcemap src/index.ts --outfile app",
+    "dev": "bun index.ts",
+    "build": "bun build --compile --minify --sourcemap index.ts --outfile app",
+    "docker:build": "docker build --pull -t y-bot .",
+    "docker:run": "docker run -d -p 3000:3000 --env-file .env y-bot",
     "lint": "eslint . --fix"
   },
   "peerDependencies": {
