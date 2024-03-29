@@ -6,7 +6,8 @@
     "dev": "bun index.ts",
     "build": "bun build --compile --minify --sourcemap index.ts --outfile app",
     "docker:build": "docker build --pull -t y-bot .",
-    "docker:run": "docker run -d -p 3000:3000 --env-file .env y-bot",
+    "docker:run": "docker run --rm --name y-container -d -p 3000:3000 --env-file .env y-bot",
+    "docker:stop": "docker stop y-container",
     "lint": "eslint . --fix"
   },
   "peerDependencies": {
