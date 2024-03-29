@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "bun index.ts",
     "deploy": "bun src/utils/deploy.ts",
-    "start": "npx tsx index.ts",
+    "start": "tsx index.ts",
     "bundle": "bun build --compile --minify --sourcemap index.ts --outfile app",
     "docker:build": "docker build --pull -t y-bot .",
     "docker:run": "docker run --rm --name y-container -d -p 3000:3000 --env-file .env y-bot",
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^2.8.3",
     "@types/bun": "latest",
-    "eslint": "^8.57.0"
+    "eslint": "^8.57.0",
+    "tsx": "^4.7.1"
   }
 }
