@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, TextChannel } from 'discord.js'
-import type { Command } from './index.js'
+import type { Command } from './index'
 
 export default {
   data: {
