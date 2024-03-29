@@ -18,8 +18,7 @@
   "dependencies": {
     "@discordjs/core": "^1.1.1",
     "discord.js": "^14.14.1",
-    "dotenv": "^16.4.5",
-    "tsx": "^4.7.1"
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.8.3",
