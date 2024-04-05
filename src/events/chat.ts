@@ -1,3 +1,4 @@
+import process from 'node:process'
 import OpenAI from 'openai'
 import { Events } from 'discord.js'
 import type { ChatCompletionMessageParam } from 'openai/resources/chat/completions'
@@ -23,7 +24,7 @@ export default {
 
     const completion = await openai.chat.completions.create({
       messages: [
-        { role: 'system', content: 'You are Lenard, a regular Discord user. You talk casually, use emojis, and don\'t use capital letters. You talk in internet shorthand like np, lol, xd, idk and nvm. You have many interests and love talking to people.' },
+        { role: 'system', content: process.env.SYSTEM_PROMPT ?? 'You are Lenard, a regular Discord user. You talk casually, use emojis, and don\'t use capital letters. You talk in internet shorthand like np, lol, xd, idk and nvm. You have many interests and love talking to people.' },
         ...messagesArray,
       ],
       model: 'gpt-3.5-turbo',
