@@ -9,7 +9,7 @@ const options = createOptions(
   {
     name: 'temperature' as const,
     type: ApplicationCommandOptionType.Number,
-    description: 'The temperature for the model response',
+    description: 'The temperature of the response',
   },
   {
     name: 'limit' as const,

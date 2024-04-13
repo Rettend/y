@@ -24,6 +24,13 @@ export interface ApplicationCommandOptionTypeMap {
   [ApplicationCommandOptionType.Attachment]: Attachment
 }
 
-export type OptionTypeMap<T extends { name: string, type: ApplicationCommandOptionType }[]> = {
-  [K in T[number]['name']]: ApplicationCommandOptionTypeMap[Extract<T[number], { name: K }>['type']];
+// NOTE #1: this should work but TypeScript said no
+// it only removes the undefined type if all options are required
+
+// NOTE #2: if you have options with different types, you need to use `as const` on the `name` property
+
+export type OptionTypeMap<T extends { name: string, type: ApplicationCommandOptionType, required?: boolean }[]> = {
+  [K in T[number]['name']]: T[number]['required'] extends true
+    ? ApplicationCommandOptionTypeMap[Extract<T[number], { name: K }>['type']]
+    : ApplicationCommandOptionTypeMap[Extract<T[number], { name: K }>['type']] | undefined
 }
