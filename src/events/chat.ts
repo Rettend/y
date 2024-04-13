@@ -1,5 +1,5 @@
 import OpenAI from 'openai'
-import { Events } from 'discord.js'
+import { ChannelType, Events } from 'discord.js'
 import { chat } from '../util/utils'
 import type { Event } from './index'
 
@@ -11,6 +11,13 @@ export default {
     if (message.author.bot)
       return
 
-    await chat(message.client.user, message.channel, openai)
+    if (message.channel.type !== ChannelType.GuildText)
+      return
+
+    await chat({
+      bot: message.client.user,
+      user: message.author,
+      channel: message.channel,
+    }, openai)
   },
 } satisfies Event<Events.MessageCreate>

@@ -1,27 +1,30 @@
-import { ApplicationCommandOptionType, TextChannel } from 'discord.js'
+import { ApplicationCommandOptionType, ChannelType } from 'discord.js'
+import { createOptions, extractOptions } from '../util/utils'
 import { permissions } from '../util/constants'
 import type { Command } from './index'
+
+const options = createOptions(
+  {
+    name: 'amount',
+    type: ApplicationCommandOptionType.Integer,
+    description: 'The amount of messages to clear.',
+  },
+)
 
 export default {
   data: {
     name: 'clear',
     description: 'Clears a specified amount of messages from the channel.',
     default_member_permissions: permissions.ADMINISTRATOR,
-    options: [
-      {
-        name: 'amount',
-        description: 'The amount of messages to clear.',
-        type: ApplicationCommandOptionType.Integer,
-      },
-    ],
+    options,
   },
   async execute(interaction) {
-    const amount = interaction.options.get('amount')?.value as number || 1
+    const { amount = 1 } = extractOptions(interaction.options.data, options)
 
     if (amount < 1 || amount > 100)
       await interaction.reply('The amount must be between 1 and 100.')
 
-    if (interaction.channel instanceof TextChannel) {
+    if (interaction.channel?.type === ChannelType.GuildText) {
       const { size } = await interaction.channel.bulkDelete(amount)
       const message = await interaction.reply({
         content: `Deleted ${size} messages.`,
