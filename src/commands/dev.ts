@@ -1,12 +1,13 @@
 import process from 'node:process'
-import { permissions } from '../util/constants'
 import { deploy } from '../util/deploy'
+import { permissions } from '../util/constants'
 import type { Command } from './index'
 
 export const off = {
   data: {
     name: 'off',
     description: 'Turn off the bot.',
+    // @ts-expect-error types are wrong
     default_member_permissions: permissions.ADMINISTRATOR,
   },
   async execute(interaction) {
@@ -26,6 +27,7 @@ export const reload = {
   data: {
     name: 'reload',
     description: 'Reloads all slash commands.',
+    // @ts-expect-error types are wrong
     default_member_permissions: permissions.ADMINISTRATOR,
   },
   async execute(interaction) {

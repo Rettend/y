@@ -2,10 +2,10 @@
 import process from 'node:process'
 import type OpenAI from 'openai'
 import type { ChatCompletionMessageParam } from 'openai/resources/chat/completions'
-import { SnowflakeUtil } from 'discord.js'
-import type { APIApplicationCommandOption, Collection, CommandInteractionOption, Message, TextBasedChannel, User } from 'discord.js'
+import type { APIApplicationCommandOption, CommandInteractionOption, Message, TextBasedChannel, User } from 'discord.js'
+import { Collection, SnowflakeUtil } from 'discord.js'
 import type { OptionTypeMap } from '../types/types'
-import { MAX_MESSAGES, MESSAGE_SIZE_LIMIT } from './constants'
+import { DELIMITER, MAX_MESSAGES, MESSAGE_SIZE_LIMIT } from './constants'
 
 // #region General
 export function log(prefix: string, message: string) {
@@ -64,6 +64,11 @@ export async function getMessages({ bot, user, channel }: Options, limit?: numbe
     messages = await channel.messages.fetch({ after })
   }
 
+  if (!messages)
+    throw new Error('Messages not found')
+
+  messages = filterMessagesUntilDelimiter(messages, DELIMITER)
+
   const messagesArray: ChatCompletionMessageParam[] = messages?.reverse().map(m => ({
     role: bot.id === m.author.id ? 'assistant' : 'user',
     content: m.content,
@@ -81,6 +86,25 @@ export async function getMessages({ bot, user, channel }: Options, limit?: numbe
   return messagesArray ?? []
 }
 
+function filterMessagesUntilDelimiter(messages: Collection<string, Message>, delimiter: string): Collection<string, Message> {
+  const filteredCollection = new Collection<string, Message>()
+  let foundDelimiter = false
+
+  messages.forEach((message, messageId) => {
+    if (foundDelimiter)
+      return
+
+    if (message.content.includes(delimiter)) {
+      foundDelimiter = true
+      return
+    }
+
+    filteredCollection.set(messageId, message)
+  })
+
+  return filteredCollection
+}
+
 export async function chat(options: Options, openai: OpenAI, temperature?: number, limit?: number, prompt?: string) {
   if (!options.channel)
     throw new Error('Channel not found')
@@ -94,7 +118,7 @@ export async function chat(options: Options, openai: OpenAI, temperature?: numbe
       ...messages,
     ],
     presence_penalty: 0.5,
-    temperature: temperature ?? 1.3,
+    temperature: temperature ?? 1,
     model: 'gpt-4-turbo-preview',
     // model: 'gpt-3.5-turbo',
   })

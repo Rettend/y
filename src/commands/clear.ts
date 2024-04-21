@@ -15,6 +15,7 @@ export default {
   data: {
     name: 'clear',
     description: 'Clears a specified amount of messages from the channel.',
+    // @ts-expect-error types are wrong
     default_member_permissions: permissions.ADMINISTRATOR,
     options,
   },
